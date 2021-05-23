@@ -4,8 +4,10 @@
 @using Microsoft.EntityFrameworkCore
 
 @{ 
-    async Task Template(string label, ModelExpression expr)
+    async Task Template(string label, string str)
     {
+        var expr = Model.CreateModelExpression(str);
+
         <div class="form-group">
 
             <label>@label</label>
@@ -19,17 +21,17 @@
 <div class="m-2">
     <h5 class="bg-primary text-white text-center p-2">HTML Form</h5>
     <form asp-page="FormHandler" method="post" id="htmlform">
-
+        123
         @{ 
-            await Template("Name",     Model.CreateModelExpression("Product.Name"));
-            await Template("Price",    Model.CreateModelExpression("Product.Price"));
-            await Template("Category", Model.CreateModelExpression("Product.Category.Name"));
-            await Template("Supplier", Model.CreateModelExpression("Product.Supplier.Name"));
+            await Template("Name",     "Product.Name");
+            await Template("Price",    "Product.Price");
+            await Template("Category", "Product.Category.Name");
+            await Template("Supplier", "Product.Supplier.Name");
         }
 
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
     <button form="htmlform" asp-page="FormHandler" class="btn btn-primary mt-2">
-        Sumit (Outside Form)
+        Submit (Outside Form)
     </button>
 </div>
