@@ -12,25 +12,21 @@ namespace WebApp.Pages
 {
     public class FormHandlerModel : PageModel
     {
-        public ModelExpressionProvider ModelExpressionProvider { get; set; }
+        private ModelExpressionProvider _modelExpressionProvider { get; set; }
 
         private DataContext context;
 
         public FormHandlerModel(DataContext dbContext, ModelExpressionProvider modelExpressionProvider)
         {
             context = dbContext;
-            ModelExpressionProvider = modelExpressionProvider;
+            _modelExpressionProvider = modelExpressionProvider;
         }
 
-        public ModelExpression create(string expr)
+        public ModelExpression CreateModelExpression(string expr)
         {
-            // var abc = ViewData;
-
-            //var xyz = new ViewDataDictionary<string>(ViewData);
-
-            var xyz = new ViewDataDictionary<FormHandlerModel>(ViewData);
-
-            return ModelExpressionProvider.CreateModelExpression(xyz, expr);
+            var dict = new ViewDataDictionary<FormHandlerModel>(ViewData);
+            
+            return _modelExpressionProvider.CreateModelExpression(dict, expr);
         }
 
         public Product Product { get; set; }
@@ -51,27 +47,4 @@ namespace WebApp.Pages
             return RedirectToPage("FormResults");
         }
     }
-
-    //public class FormHandlerModelAlt : PageModel
-    //{
-    //    public ModelExpressionProvider ModelExpressionProvider { get; set; }
-
-    //    public FormHandlerModel(ModelExpressionProvider modelExpressionProvider)
-    //    {
-    //        ModelExpressionProvider = modelExpressionProvider;
-    //    }
-
-    //    public ModelExpression create(string expr)
-    //    {
-    //        // var abc = ViewData;
-
-    //        var xyz = new ViewDataDictionary<string>(ViewData);
-
-    //        return ModelExpressionProvider.CreateModelExpression(xyz, expr);
-    //    }
-
-    //    public void OnGet()
-    //    {
-    //    }
-    //}
 }
